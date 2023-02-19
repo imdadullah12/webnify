@@ -4,7 +4,7 @@ import axios from "axios";
 import Moment from "react-moment";
 import Header from "../../../components/header";
 
-const Resutl = () => {
+const Result = () => {
   const router = useRouter();
   const [session, setSession] = useState([]);
   const {
@@ -16,7 +16,16 @@ const Resutl = () => {
   } = router.query;
   const apiUrl = process.env.api_url;
 
+  const [userData, setUserData] = useState("");
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const user_data = localStorage.getItem("user_data");
+      setUserData(JSON.parse(user_data) || {});
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!userData.user_id) return;
     if (session == "") {
       axios(apiUrl + "app/fetch/get_student_session.php", {
         method: "POST",
@@ -24,7 +33,7 @@ const Resutl = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         data: {
-          db: process.env.database,
+          db: userData && userData.database,
           category: category,
           medium: medium,
           class: className,
@@ -36,7 +45,7 @@ const Resutl = () => {
         setSession(response.data.data);
       });
     }
-  }, [category, className, medium, section, stream, apiUrl, session]);
+  }, [category, className, medium, section, stream, apiUrl, session, userData]);
 
   return (
     <>
@@ -123,4 +132,4 @@ const Resutl = () => {
   );
 };
 
-export default Resutl;
+export default Result;

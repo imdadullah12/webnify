@@ -7,6 +7,13 @@ import Moment from "react-moment";
 const Result = () => {
   const router = useRouter();
   const [attendance, setAttendance] = useState([]);
+  const [userData, setUserData] = useState("");
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const user_data = localStorage.getItem("user_data");
+      setUserData(JSON.parse(user_data) || {});
+    }
+  }, []);
   const apiUrl = process.env.api_url;
   const {
     category,
@@ -20,6 +27,7 @@ const Result = () => {
   } = router.query;
 
   useEffect(() => {
+    if (!userData.user_id) return;
     if (attendance == "") {
       axios(apiUrl + "app/fetch/fetching_student_attendace.php", {
         method: "POST",
@@ -27,7 +35,7 @@ const Result = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         data: {
-          db: process.env.database,
+          db: userData && userData.database,
           category: category,
           medium: medium,
           class: className,
@@ -49,6 +57,7 @@ const Result = () => {
     apiUrl,
     sessionId,
     attendance,
+    userData,
   ]);
   return (
     <>

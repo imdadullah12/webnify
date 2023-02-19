@@ -8,11 +8,11 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { toast } from "react-toastify";
 
 const TakeAttendance = () => {
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState("");
   useEffect(() => {
     if (typeof window !== "undefined") {
       const user_data = localStorage.getItem("user_data");
-      setUserData(JSON.parse(user_data));
+      setUserData(JSON.parse(user_data) || {});
     }
   }, []);
   const router = useRouter();
@@ -47,7 +47,7 @@ const TakeAttendance = () => {
                       "Content-Type": "application/x-www-form-urlencoded",
                     },
                     data: {
-                      db: process.env.database,
+                      db: userData && userData.database,
                       session_id: sessionID,
                       holiday: 0,
                     },
@@ -93,7 +93,7 @@ const TakeAttendance = () => {
                       "Content-Type": "application/x-www-form-urlencoded",
                     },
                     data: {
-                      db: process.env.database,
+                      db: userData && userData.database,
                       session_id: sessionID,
                       holiday: 1,
                     },
@@ -123,7 +123,7 @@ const TakeAttendance = () => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
       data: {
-        db: process.env.database,
+        db: userData && userData.database,
         attendance: attendance,
         session_id: sessionID,
       },
@@ -138,7 +138,7 @@ const TakeAttendance = () => {
           "Content-Type": "application/json",
         },
         data: {
-          db: process.env.database,
+          db: userData && userData.database,
           category: category,
           medium: medium,
           class: className,
@@ -159,7 +159,7 @@ const TakeAttendance = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         data: {
-          db: process.env.database,
+          db: userData && userData.database,
           taken_by: userData.user_id,
           category: category,
           medium: medium,

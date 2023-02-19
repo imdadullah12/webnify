@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/header";
-import Moment from "react-moment";
-import { useRouter } from "next/router";
 import { FiCheckCircle, FiEdit3 } from "react-icons/fi";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { BsCalendar2Check } from "react-icons/bs";

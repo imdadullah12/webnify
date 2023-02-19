@@ -10,7 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 const UserAttendance = () => {
   const router = useRouter();
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState("");
   const [attText, setAttText] = useState("Give Attendance");
   const [pinchText, setPinchText] = useState("Pinch Out");
   const [disabled, setDisabled] = useState(false);
@@ -25,24 +25,22 @@ const UserAttendance = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const user_data = localStorage.getItem("user_data");
-      setUserData(JSON.parse(user_data));
+      setUserData(JSON.parse(user_data) || {});
     }
   }, []);
   useEffect(() => {
-    if (userData && userData != "") {
-      axios(process.env.api_url + "app/insert/get_teacher_attendance.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        data: {
-          db: process.env.database,
-          user_id: userData.user_id,
-        },
-      }).then(function (response) {
-        setAttendaceCheck(response.data.data);
-      });
-    }
+    axios(process.env.api_url + "app/insert/get_teacher_attendance.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: {
+        db: userData && userData.database,
+        user_id: userData && userData.user_id,
+      },
+    }).then(function (response) {
+      setAttendaceCheck(response.data.data);
+    });
   }, [userData]);
 
   const handleAttendance = () => {
@@ -64,7 +62,7 @@ const UserAttendance = () => {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           data: {
-            db: process.env.database,
+            db: userData && userData.database,
             user_id: userData.user_id,
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -115,7 +113,7 @@ const UserAttendance = () => {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           data: {
-            db: process.env.database,
+            db: userData && userData.database,
             user_id: userData.user_id,
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,

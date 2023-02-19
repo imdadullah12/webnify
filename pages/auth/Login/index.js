@@ -53,25 +53,17 @@ const Login = () => {
           if (response.data.status == 401) {
             toast("Email or Password is Incorrect");
           } else {
-            const res = await fetch("/api/update-env", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ database_name }),
-            });
-            if (res.ok) {
-              localStorage.setItem(
-                "user_data",
-                JSON.stringify({
-                  user_id: response.data.user.id,
-                  user_name: response.data.user.full_name,
-                  email: response.data.user.email,
-                  designation: response.data.user.designation,
-                })
-              );
-              router.push("/home");
-            } else {
-              toast.error("Failed to update database name.");
-            }
+            localStorage.setItem(
+              "user_data",
+              JSON.stringify({
+                user_id: response.data.user.id,
+                user_name: response.data.user.full_name,
+                email: response.data.user.email,
+                designation: response.data.user.designation,
+                database: database_name,
+              })
+            );
+            router.push("/home");
           }
         })
         .catch(function (error) {

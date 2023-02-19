@@ -17,6 +17,14 @@ const SearchForm = () => {
   const [selectedStream, setSelectedStream] = useState("None");
   const [selectedSection, setSelectedSection] = useState("");
 
+  const [userData, setUserData] = useState("");
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const user_data = localStorage.getItem("user_data");
+      setUserData(JSON.parse(user_data) || {});
+    }
+  }, []);
+
   function handleCategory(event) {
     setSelectedCategory(event.target.value);
   }
@@ -42,13 +50,14 @@ const SearchForm = () => {
   }
 
   useEffect(() => {
+    if (!userData.user_id) return;
     axios(apiUrl + "fetch/data/category.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       data: {
-        db: process.env.database,
+        db: userData && userData.database,
       },
     }).then(function (response) {
       setCategory(response.data);
@@ -60,7 +69,7 @@ const SearchForm = () => {
           "Content-Type": "application/json",
         },
         data: {
-          db: process.env.database,
+          db: userData && userData.database,
           category: selectedCategory,
         },
       }).then(function (response) {
@@ -73,7 +82,7 @@ const SearchForm = () => {
               "Content-Type": "application/json",
             },
             data: {
-              db: process.env.database,
+              db: userData && userData.database,
             },
           }).then(function (response) {
             setStream(response.data.message);
@@ -85,16 +94,17 @@ const SearchForm = () => {
     } else {
       setMedium([]);
     }
-  }, [selectedCategory, apiUrl]);
+  }, [selectedCategory, apiUrl, userData]);
 
   useEffect(() => {
+    if (!userData.user_id) return;
     axios(apiUrl + "fetch/data/class.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       data: {
-        db: process.env.database,
+        db: userData && userData.database,
         category: selectedCategory,
       },
     }).then(function (response) {
@@ -104,7 +114,7 @@ const SearchForm = () => {
         setClasses(response.data.message);
       }
     });
-  }, [selectedCategory, apiUrl]);
+  }, [selectedCategory, apiUrl, userData]);
 
   return (
     <div className="imdos-main">

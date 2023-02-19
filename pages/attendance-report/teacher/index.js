@@ -4,7 +4,7 @@ import axios from "axios";
 import Moment from "react-moment";
 const Report = () => {
   const [attendance, setAttendance] = useState([]);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState("");
   const apiUrl = process.env.api_url;
 
   useEffect(() => {
@@ -24,13 +24,13 @@ const Report = () => {
       },
       data: {
         user_id: user.user_id,
-        db: process.env.database,
+        db: user && user.database,
       },
     }).then(function (response) {
       console.log(response.data);
       setAttendance(response.data);
     });
-  }, [user.user_id, apiUrl]);
+  }, [user, apiUrl]);
   return (
     <>
       <Header />
