@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import axios from "axios";
 import Header from "../../components/header";
 import { confirmAlert } from "react-confirm-alert";
@@ -276,7 +276,7 @@ const TakeAttendance = () => {
                   </div>
                 </div>
                 <div className="image">
-                  <Image
+                  <img
                     src={process.env.image_url + students.image}
                     alt="Photo"
                     width={150}

@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
-import Image from "next/image";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import LoadingIcons from "react-loading-icons";
@@ -79,7 +79,7 @@ const Login = () => {
         <div className="d-flex justify-content-center align-items-center">
           <div className="card w-100 border py-5 imdos-bg-blur shadow">
             <div className="card-body text-center">
-              <Image
+              <img
                 src="/webnify.png"
                 width={200}
                 height={200}
