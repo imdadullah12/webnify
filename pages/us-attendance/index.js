@@ -28,19 +28,23 @@ const UserAttendance = () => {
       setUserData(JSON.parse(user_data) || {});
     }
   }, []);
+
   useEffect(() => {
-    axios(process.env.api_url + "app/insert/get_teacher_attendance.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      data: {
-        db: userData && userData.database,
-        user_id: userData && userData.user_id,
-      },
-    }).then(function (response) {
-      setAttendaceCheck(response.data.data);
-    });
+    if (userData != "") {
+      axios(process.env.api_url + "app/insert/get_teacher_attendance.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        data: {
+          db: userData && userData.database,
+          user_id: userData && userData.user_id,
+        },
+      }).then(function (response) {
+        console.log(response.data);
+        setAttendaceCheck(response.data.data);
+      });
+    }
   }, [userData]);
 
   const handleAttendance = () => {
@@ -74,7 +78,7 @@ const UserAttendance = () => {
             toast("Attendace Captured!");
             setAttText(<BsCheck2All height={50} />);
             setDisabled(true);
-            router.push("/home");
+            // router.push("/home");
           } else {
             toast("Something went wrong");
             setAttText(<ImCross height={50} />);

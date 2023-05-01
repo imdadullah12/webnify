@@ -8,8 +8,21 @@
   src: url(./fonts/Ubuntu-Bold.ttf);
 }
 
+* {
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden !important;
+}
+
+.imdos-main {
+  overflow-y: scroll !important
+}
+
 html,
 body {
+  overflow: hidden;
   padding: 0;
   margin: 0;
   font-family: Imdos !important;
@@ -85,7 +98,7 @@ a {
   min-height: 95vh;
   max-height: 95vh;
   background: #f0f8ff00;
-  padding-top: 50px;
+  padding-top: 65px;
   padding-bottom: 50px;
   overflow: scroll;
 }

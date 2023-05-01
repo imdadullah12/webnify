@@ -52,16 +52,21 @@ const Header = () => {
   return (
     <>
       <div className="imdos-blur imdos-footer position-absolute m-0 top-0 w-100 ">
-        <div className="m-0 mx-3 justify-content-between alignt-items-center d-flex py-2">
+        <div className="m-0 mx-3 justify-content-between alignt-items-center d-flex py-3">
           {router.pathname == "/home" && (
-            <h5 className="mt-1 text-white">Webnify</h5>
+            <h5 className="mt-1 text-white">WEBNIFY</h5>
           )}
           {router.pathname != "/home" && (
             <div
               className="humburger p-1 rounded"
               onClick={() => window.history.back()}
             >
-              <FiArrowLeftCircle className="h1 mb-0 text-white" />
+              <FiArrowLeftCircle
+                style={{
+                  fontSize: 30,
+                }}
+                className="mb-0 text-white"
+              />
             </div>
           )}
         </div>

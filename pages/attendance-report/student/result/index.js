@@ -97,10 +97,10 @@ const Result = () => {
             </thead>
             <tbody>
               {attendance.map((attendance) => {
-                const { roll_no, status, name } = attendance;
+                const { roll_no, status, name, index } = attendance;
                 return (
                   <tr
-                    key={roll_no}
+                    key={index}
                     valign="middle"
                     style={{ whiteSpace: "nowrap" }}
                   >
